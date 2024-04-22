@@ -1,0 +1,46 @@
+descriptor_id: CSV
+descriptor_type: other
+descriptor_flavors:
+  - all_flavors # Applicable to CI in any language project
+lint_all_other_linters_files: true
+linters:
+  # CSVCLEAN
+  - class: CSVClean
+    linter_name: csvclean
+    name: CSV_CSVCLEAN
+    is_formatter: true
+    can_outpur_sarif: false
+    variables:
+      - name: CSV_CSVCLEAN_ANALYZE_FILE_NAMES
+        default_value: "true"
+        description: If set to `true`, MegaLinter will also send file names to csvclean for analysis. Disable by defining `CSV_CCLEAN_ANALYZE_FILE_NAMES` to `false`
+    linter_speed: 1
+    linter_text: |
+      CSVClean, from [csvkit](https://github.com/wireservice/csvkit), will
+      lint, tidy, and clean .csv (character separated values) files.
+    linter_url: https://github.com/wireservice/csvkit
+    linter_repo: https://github.com/wireservice/csvkit
+
+    linter_rules_configuration_url: https://csvkit.readthedocs.io/en/latest/scripts/csvclean.html
+
+    cli_lint_extra_args:
+    - "--dry-run"   
+    cli_lint_fix_remove_args:
+    - "--dry-run"
+    cli_help_arg_name: "--help"
+    cli_version_arg_name: "--version"
+    cli_lint_mode: list_of_files
+    cli_lint_errors_count: regex_number
+    cli_lint_errors_regex: "^([[:digit:]]*[[:space:]]*error.*"
+    examples:
+      - "csvclean myfile.csv"
+      - "csvclean -u1 myfile.csv"
+    install:
+      pip:
+        - "csvkit"
+    ide:
+      vscode:
+        - name: Code Spell Checker
+          url: https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker
+
+
